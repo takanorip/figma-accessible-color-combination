@@ -1,35 +1,36 @@
-import * as React from 'react'
+import React from 'react'
 import * as ReactDOM from 'react-dom'
 import './ui.css'
 
-declare function require(path: string): any
+type Props = {}
 
-class App extends React.Component {
-  textbox: HTMLInputElement
-
-  countRef = (element: HTMLInputElement) => {
+export const App: React.FC<Props> = () => {
+  const updateColor = (element: HTMLInputElement) => {
     if (element) element.value = '5'
     this.textbox = element
   }
 
-  onCreate = () => {
+  const onCreate = () => {
     const count = parseInt(this.textbox.value, 10)
     parent.postMessage({ pluginMessage: { type: 'create-rectangles', count } }, '*')
   }
 
-  onCancel = () => {
+  const onCancel = () => {
     parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
   }
 
-  render() {
-    return <div>
-      <img src={require('./logo.svg')} />
+  return(
+    <div>
       <h2>Rectangle Creator</h2>
-      <p>Count: <input ref={this.countRef} /></p>
+      <div>
+        <p>colors</p>
+        <input onChange={updateColor} />
+        <p>color3: <input ref={this.countRef} /></p>
+      </div>
       <button id="create" onClick={this.onCreate}>Create</button>
       <button onClick={this.onCancel}>Cancel</button>
     </div>
-  }
+  )
 }
 
 ReactDOM.render(<App />, document.getElementById('react-page'))

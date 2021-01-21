@@ -1,4 +1,10 @@
-const hexToRgb = (hex: string) => {
+type Rgb = {
+  r: number,
+  g: number,
+  b: number,
+}
+
+export const hexToRgb = (hex: string): Rgb => {
   const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
   hex = hex.replace(shorthandRegex, (m, r, g, b) => {
     return r + r + g + g + b + b;
@@ -12,7 +18,7 @@ const hexToRgb = (hex: string) => {
   } : null;
 }
 
-const luminance = (r: number, g: number, b: number) => {
+export const luminance = (r: number, g: number, b: number): number => {
   const a = [r, g, b].map(v => {
     v /= 255;
     return v <= 0.03928
@@ -22,7 +28,7 @@ const luminance = (r: number, g: number, b: number) => {
   return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
 }
 
-const calculateRatio = (color1: string, color2: string) => {
+export const calculateRatio = (color1: string, color2: string): number => {
 
   // read the colors and transform them into rgb format
   const color1rgb = hexToRgb(color1);
